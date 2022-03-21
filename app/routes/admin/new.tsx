@@ -14,7 +14,7 @@ export const action:  ActionFunction = async ({request}) => {
     const formData = await request.formData();
 
     const title = formData.get('title');
-    const slug = formData.get('slug');
+    let slug = formData.get('slug');
     const markdown = formData.get('markdown');
 
    const errors: PostError = {};
@@ -28,6 +28,8 @@ export const action:  ActionFunction = async ({request}) => {
    }
 
    invariant(typeof title === 'string' && typeof slug === 'string' && typeof markdown === 'string');
+
+   slug = slug.replace(/\s+/gi, " ").replace(/\s/gi, "-").toLowerCase()
 
     await createPost({
         title,
