@@ -2,7 +2,6 @@ import path from 'path';
 import fs from 'fs/promises';
 import parseFrontMatter from 'front-matter'
 import invariant from 'tiny-invariant';
-import {marked} from 'marked';
 import {json} from "remix";
 
 const postLocation = path.join(__dirname, '..', 'posts')
@@ -36,7 +35,7 @@ export const getPost = async (slug: string) => {
     const postData = await fs.readFile(path.join(postLocation, `${slug}.md`), 'utf8');
     const {body, attributes} = parseFrontMatter<PostMarkDownAttributes>(postData)
     invariant(isValidPostAttributes(attributes), `${postLocation} has bad file meta data`)
-    return {slug, title: attributes.title, body: marked.parse(body)}
+    return {slug, title: attributes.title, body}
 }
 
 export const createPost = async (post: NewPost) => {

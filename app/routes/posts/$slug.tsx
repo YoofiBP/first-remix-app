@@ -1,10 +1,13 @@
 import {json, LoaderFunction, useLoaderData} from "remix";
 import {getPost} from "~/post";
 import invariant from "tiny-invariant";
+import {marked} from "marked";
 
 export const loader: LoaderFunction = async ({params}) => {
     invariant(params.slug, 'No slug specified');
-    return json(await getPost(params.slug))
+    const postData = await getPost(params.slug)
+    postData.body = marked.parse(postData.body)
+    return json(postData)
 }
 
 export default function PostsSlug(){

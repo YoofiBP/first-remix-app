@@ -2,4 +2,4 @@
 title: Blue is the color
 ---
 
-Blueis the color
+# Blue is the color
